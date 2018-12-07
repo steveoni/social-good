@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<body>
+  
+  <div style="margin:10% 20% auto;text-align: center;">
+      <h1>Socio Good Data</h1>
+      <p>
+       life of children in lekki Area not going to school
+      </p>
+  </div>
+  <div id="chartContainer" style="margin:10% 20% auto;width:65%;height:80%;background-color:white;
+  border-radius: 5px;box-shadow: 2px 2px 2px 1px black;font: 14px 'Times New Roman', 'Times', serif;line-height: 1.4;color: #111;">
+  <p>
+      This show diffferent nationality in which the people who live in this community belongs to.And from the
+    data we can see that majority of them are from Nigeria,while Togo is about(3%), and the others
+    has 1%.(move your mouse over the color of the piechart). That is this people are asually our people.
+
+  </p>
+</div>
+
+  <div id="maried_single" style="margin:10% 20% auto;width:65%;height:80%;background-color:white;
+  border-radius: 5px;box-shadow: 2px 2px 2px 2px black;font: 14px 'Times New Roman', 'Times', serif;line-height: 1.4;color: #111;">
+  <article>
+    Just knowing their nationality does not actually solved the problem, so their is a need to go deeper,
+    from the data,it was discover that majority of this people are married, but the ratio between the 
+    married and the singles is very small, which can also be one of the major factor that contribute to the problem.
+  </article>
+</div>
+
+<div id="guard_emp" style="margin:10% 20% auto;width:65%;height:80%;background-color:white;
+  border-radius: 5px;box-shadow: 2px 2px 2px 2px black;font: 14px 'Times New Roman', 'Times', serif;line-height: 1.4;color: #111;">
+  <article>
+    After knowing the ratio of married to unmarried,it is comprusory to know it this people are
+    actually have what put food on the table for them.From the data we found out that majority are self employed,
+    and at the same time the ration of those unemployed to those employed is high.(mouse over the bar chat)
+
+  </article> 
+</div>
+
+<div id="guard_type" style="margin:10% 20% auto;width:65%;height:80%;background-color:white;
+  border-radius: 5px;box-shadow: 2px 2px 2px 2px black;font: 14px 'Times New Roman', 'Times', serif;line-height: 1.4;color: #111;">
+  <p>To know more we can visualize the type of guardian this kids have,majority are relative and we also find out most
+    of them live with their mother.Note: this stat does not go against umarried and married
+    stat we did above. Since we don't know if this relative married.
+  </p> 
+</div>
+
+<div id="bar_grouped" style="margin:10% 20% auto;width:65%;height:100%;background-color:white;
+  border-radius: 5px;box-shadow: 2px 2px 2px 2px black;font: 14px 'Times New Roman', 'Times', serif;line-height: 1.4;color: #111;">
+  <p>
+    We also need to view the type of hous this people lived in , in each estate and street,found 
+    out that majority have stated long in Aro town estate in a makeshift house. This stat is a plot
+    between Estate,house type and how long they have been in that community.The month are divided by 
+    12, and the year the same. if the year is in this standard (2016), we deduct it from 2018.all in float.
+  </p>
+
+</div>
+<div id="reason" style="margin:10% 20% auto;width:65%;height:300px;background-color:white;
+  border-radius: 5px;box-shadow: 2px 2px 2px 2px black;font: 14px 'Times New Roman', 'Times', serif;line-height: 1.4;color: #111;
+  text-align: center;">
+  Is also good to infer a visualisation why they don't go to school,this visualisation used world cloud,
+  the childs reason are concatenated to generate the cloud. we see that majority is lack of money,relocation,
+  sickness,death,far,apprentisim, e.t.c.
+  <br >
+    <img src="/data/reason5.png" />
+   
+</div>
+<div id="reason" style="margin:10% 20% auto;width:65%;height:400px;background-color:white;
+  border-radius: 5px;box-shadow: 2px 2px 2px 2px black;font: 14px 'Times New Roman', 'Times', serif;line-height: 1.4;color: #111;
+  text-align: center;">
+  <p>
+    Since we know that the majority of this people are self employed it will be good to know the kind 
+    of work they do.This visualisation shows that most of them are Traders,Divers, e.t.c.
+  </p>
+  <br >
+    <div>
+      <img src="/data/socio_emp.png" width="500"  />
+    </div>
+    
+    
+</div>
+
+
+  <script src="/lib/d3.v4.3.0.js"></script>
+  <script src="/dist/dimple.v2.3.0.js"></script>
+  <script type="text/javascript">
+    var debug = true;
+    
+    var svg1 = dimple.newSvg("#chartContainer", 590, 400);
+    console.log(svg);
+  var s =   d3.csv("/data/nationality_count.csv", function (data) {
+      var myChart = new dimple.chart(svg1, data);
+     
+      myChart.addMeasureAxis("p", "count");
+      myChart.addSeries("nationality", dimple.plot.pie);
+      myChart.addLegend(500, 20, 90, 300, "left");
+      myChart.draw();
+      debug = false;
+      console.log(debug);
+    });
+
+
+
+  
+     var svg = dimple.newSvg("#maried_single", 590, 400);
+     d3.csv("/data/parent_info.csv", function (data) {
+       var myChart = new dimple.chart(svg, data);
+       
+       myChart.addMeasureAxis("p", "status_count");
+       myChart.addSeries("status", dimple.plot.pie);
+       myChart.addLegend(500, 20, 90, 300, "left");
+       myChart.draw();
+     });
+
+
+     var svg_g = dimple.newSvg("#guard_emp", 590, 400);
+
+     d3.csv("/data/guard_emp.csv",function(data){
+      var myChart = new dimple.chart(svg_g, data);
+      myChart.setBounds(60, 30, 510, 305)
+      var x = myChart.addCategoryAxis("x", "employment");
+      x.addOrderRule("Date");
+      myChart.addMeasureAxis("y", "count");
+      myChart.addSeries(null, dimple.plot.bar);
+      myChart.draw();
+
+     });
+
+     var svg_type = dimple.newSvg("#guard_type", 590, 400);
+
+    d3.csv("/data/guard_type.csv",function(data){
+
+      var myChart = new dimple.chart(svg_type, data);
+      
+      myChart.setBounds(20, 20, 460, 360)
+      myChart.addMeasureAxis("p", "count");
+      var ring = myChart.addSeries("Type", dimple.plot.pie);
+      ring.innerRadius = "50%";
+      myChart.addLegend(500, 20, 90, 300, "left");
+      myChart.draw();
+
+    });
+
+
+    var svg_bar = dimple.newSvg("#bar_grouped", 590, 400);
+
+    d3.csv("/data/data1.csv",function(data){
+
+      var myChart = new dimple.chart(svg_bar, data);
+      myChart.setBounds(60, 30, 800, 300)
+      myChart.addCategoryAxis("x", ["Estate Name", "House Type"]);
+      myChart.addMeasureAxis("y", "HLC");
+      myChart.addSeries("Estate Name", dimple.plot.bar);
+      myChart.addLegend(65, 10, 510, 20, "right");
+      myChart.draw();
+
+  });
+
+  </script>
+</body>
+</html>
